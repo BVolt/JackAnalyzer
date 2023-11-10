@@ -4,7 +4,7 @@ import java.io.*;
 public class JackAnalyzer {
 
     public static void main(String[] args) {
-        String path = (args.length == 0) ? "tests/ExpressionLessSquare": args[0];
+        String path = (args.length == 0) ? "tests/Square": args[0];
         if(path.split("\\.").length<=1){
             File dir = new File(path);
             File[] directory = dir.listFiles();
@@ -19,18 +19,20 @@ public class JackAnalyzer {
     }
     
     public static void translateFile(String path){
-        JackTokenizer tokenizer = new JackTokenizer(openInFile(path), openOutFile(path.split("\\.")[0]+"T.xml"));
+        String name = path.split("\\.")[0];
+        JackTokenizer tokenizer = new JackTokenizer(openInFile(path), openOutFile(name+"T.xml"));
         
         tokenizer.InitializeOut();
         tokenizer.advance();
         while(tokenizer.hasMoreTokens()){
-//            System.out.println(tokenizer.token);
             tokenizer.writeToken();
             tokenizer.advance();
         }
-        tokenizer.Finalize();
-        
-//        CompilationEngine engine = new CompilationEngine(openInFile(path.split("\\.")[0]+"T.xml"),openOutFile(path.split("\\.")[0]+".xml"));
+        tokenizer.Finalize(); 
+
+        CompilationEngine engine = new CompilationEngine(openInFile(name +"T.xml"),openOutFile(name + ".xml"));
+        engine.CompileClass();
+        engine.closeFiles();
     }
     
     public static BufferedReader openInFile(String path){

@@ -3,13 +3,13 @@ package com.mycompany.jackanalyzer;
 import java.io.*;
 
 public class JackTokenizer {
-    BufferedReader inFile;
-    BufferedWriter outFile;
-    String line = "";
-    String token;
-    String type;
-    boolean withinComment = false;
-    int currIndex = 0;
+    private BufferedReader inFile;
+    private BufferedWriter outFile;
+    private String line = "";
+    private String token;
+    private String type;
+    private boolean withinComment = false;
+    private int currIndex = 0;
     
     public JackTokenizer(BufferedReader file, BufferedWriter oFile){
         inFile = file;
@@ -207,7 +207,7 @@ public class JackTokenizer {
     
     public void Finalize(){
         writeLine("</tokens>");
-        closeFile();
+        closeFiles();
     }
     
     public void writeLine(String line){
@@ -218,8 +218,9 @@ public class JackTokenizer {
         }
     }
     
-    public void closeFile(){
+    public void closeFiles(){
         try{
+            inFile.close();
             outFile.close();
         }catch(IOException e){
         
